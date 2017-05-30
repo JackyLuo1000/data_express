@@ -10,6 +10,8 @@ mdb.once('open', function (callback) {
 
 var personSchema = mongoose.Schema({
   username: String,
-  email: Sting,Stree: ve age: ee: vr: va,  : var,
-  level: v var
+  email: String,
+  password: String,
+  level: var,
+  age: var
 });
