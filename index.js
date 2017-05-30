@@ -18,7 +18,12 @@ var express = require('express'),
   path = require('path'),
   route = require('./routes/routes.js'),
   bodyParser = require('body-parser');
+var bcrypt = require('bcrypt-nodejs');
+var hash;
 
+bcrypt.hash("bacon", null, null, function(err, hash){
+    console.log(hash);
+});
 
 var app = express();
 
