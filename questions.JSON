@@ -1,0 +1,23 @@
+{
+    "Question1": [
+      ["Who was the villain of 'The Lion King'?"],
+      ["Mufasa"],
+      ["Simba"],
+      ["Scar"],
+      ["Nala"]
+    ],
+    "Question2": [
+      ["Who painted the Mona Lisa?"],
+      ["Leonardo Da Vinci "],
+      ["Van Gogh"],
+      ["Frida Kahlo"],
+      ["Claude Monet"]
+    ],
+    "Question3": [
+      ["What name did Mario, from 'Super Mario Brothers', originally have?"],
+      ["Luigi"],
+      ["Wario"],
+      ["Jumpman"],
+      ["Hiro"]
+    ]
+}
