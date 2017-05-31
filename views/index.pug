@@ -3,13 +3,13 @@ extends layout
 block content
   table(class = 'gridtable')
     tr
+      th Id
       th Username
       th Email
       th Age
-      th Sec. Question 1
-      th Sec. Question 2
-      th Sec. Question 3
       th User Level
+      th
+      th
     each item in people
       tr
         td
@@ -17,6 +17,12 @@ block content
         td #{item.username}
         td #{item.email}
         td #{item.age}
-        td #{item.question1}
-        td #{item.question2}
-        td #{item.question3}
+        td #{item.level}
+        td
+          a(href='/edit/' + item.id) Edit
+        td
+          a(href='/delete/' + item.id) Delete
+          
+    p
+    #menu
+        a(href='/create') Add New User
