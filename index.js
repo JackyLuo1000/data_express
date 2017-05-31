@@ -18,8 +18,6 @@ var express = require('express'),
   path = require('path'),
   route = require('./routes/routes.js'),
   bodyParser = require('body-parser');
-var bcrypt = require('bcrypt-nodejs');
-var hash;
 
 
 
@@ -35,9 +33,7 @@ var urlencodedParser = bodyParser.urlencoded({
   extended: true
 });
 
-bcrypt.hash("bacon", null, null, function(err, hash){
-    console.log(hash);
-});
+
 
 app.get('/', route.index);
 
