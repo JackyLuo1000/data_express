@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/data'); //this link is more than likely not going to work
+mongoose.connect('mongodb://localhost/data');
 
 var mdb = mongoose.connection;
 mdb.on('error', console.error.bind(console, 'connection error:'));
@@ -12,11 +12,11 @@ var userSchema = mongoose.Schema({
   username: String,
   email: String,
   password: String,
-  age: number,
-  level: number
+  age: String,
+  level: String
 });
 
-var Person = mongoose.model('user_collection', userSchema);
+var User = mongoose.model('user_collection2', userSchema);
 
 exports.index = function (req, res) {
   User.find(function (err, user) {
@@ -41,7 +41,7 @@ exports.createUser = function (req, res) {
     password: req.body.password,
     age: req.body.age
   });
-  person.save(function (err, user) {
+  user.save(function (err, user) {
     if (err) return console.error(err);
     console.log(req.body.username + ' added');
   });
@@ -61,11 +61,11 @@ exports.edit = function (req, res) {
 exports.editPerson = function (req, res) {
   User.findById(req.params.id, function (err, user) {
     if (err) return console.error(err);
-    user.username: req.body.username;
-    user.email: req.body.email;
-    user.password: req.body.password;
-    user.age: req.body.age;
-    person.save(function (err, person) {
+    user.username= req.body.username;
+    user.email= req.body.email;
+    user.password= req.body.password;
+    user.age= req.body.age;
+    user.save(function (err, person) {
       if (err) return console.error(err);
       console.log(req.body.name + ' updated');
     });
