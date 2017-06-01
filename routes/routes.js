@@ -17,7 +17,10 @@ var userSchema = mongoose.Schema({
     email: String,
     password: String,
     age: String,
-    level: String
+    level: String,
+    question1: String,
+    question2: String,
+    question3: String
 });
 
 var User = mongoose.model('user_collection2', userSchema);
@@ -43,7 +46,11 @@ exports.createUser = function (req, res) {
         username: req.body.username,
         email: req.body.email,
         password: req.body.password,
-        age: req.body.age
+        age: req.body.age,
+        level: req.body.level,
+        question1: req.body.question1,
+        question2: req.body.question2,
+        question3: req.body.question3
     });
     console.log('1 pass: ' + user.password);
     bcrypt.hash(user.password, null, null, function(err, hash){
@@ -83,6 +90,9 @@ exports.editPerson = function (req, res) {
         user.email= req.body.email;
         user.password= req.body.password;
         user.age= req.body.age;
+        user.question1= req.body.question1;
+        user.question2= req.body.question2;
+        user.question3= req.body.question3;
         user.save(function (err, person) {
             if (err) return console.error(err);
             console.log(req.body.name + ' updated');
