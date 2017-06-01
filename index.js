@@ -39,7 +39,7 @@ app.get('/', route.index);
 
 app.get('/create', route.create);
 
-//app.get('/details/:id', route.details);
+app.get('/details/:id', route.details);
 app.post('/create', urlencodedParser, route.createUser);
 //app.post('/edit/:id', urlencodedParser, route.editUser);
 app.get('/delete/:id', route.delete);

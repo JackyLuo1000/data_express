@@ -2,25 +2,13 @@ var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/data');
 
-var bcrypt = require('bcrypt-nodejs');
-var hash;
-
-
 var mdb = mongoose.connection;
 mdb.on('error', console.error.bind(console, 'connection error:'));
 mdb.once('open', function (callback) {
 
 });
 
-var userSchema = mongoose.Schema({
-    username: String,
-    email: String,
-    password: String,
-    age: String,
-    level: String
-});
-
-var User = mongoose.model('user_collection2', userSchema);
+var User = require('../models/user-model');
 
 exports.index = function (req, res) {
     User.find(function (err, user) {
@@ -43,21 +31,11 @@ exports.createUser = function (req, res) {
         username: req.body.username,
         email: req.body.email,
         password: req.body.password,
-        age: req.body.age
-    });
-    console.log('1 pass: ' + user.password);
-    bcrypt.hash(user.password, null, null, function(err, hash){
-        console.log('hash: ' + hash);
-        user.password = hash;
-        console.log('New Pass: ' + user.password);
-    });
-    bcrypt.compare('bacon', user.password, function(err, res){
-        console.log('New Pass: ' + user.password);
-        console.log('bacon: ' + res);
-    });
-    bcrypt.compare('123luo', user.password, function(err, res){
-        console.log('New Pass: ' + user.password);
-        console.log('123luo: ' + res);
+        age: req.body.age,
+        level: req.body.level,
+        question1: req.body.question1,
+        question2: req.body.question2,
+        question3: req.body.question3
     });
     user.save(function (err, user) {
         if (err) return console.error(err);
@@ -83,6 +61,9 @@ exports.editPerson = function (req, res) {
         user.email= req.body.email;
         user.password= req.body.password;
         user.age= req.body.age;
+        user.question1= req.body.question1;
+        user.question2= req.body.question2;
+        user.question3= req.body.question3;
         user.save(function (err, person) {
             if (err) return console.error(err);
             console.log(req.body.name + ' updated');
@@ -104,6 +85,13 @@ exports.details = function (req, res) {
         res.render('details', {
             title: user.username + "'s Information",
             user: user
+        });
+        user.comparePassword('luo123', function(err, isMatch) {
+            console.log('luo123:', isMatch); // -&gt; Password123: true
+        });
+        // test a failing password
+        user.comparePassword('123Password', function(err, isMatch) {
+            console.log('123Password:', isMatch); // -&gt; 123Password: false
         });
     });
 };
