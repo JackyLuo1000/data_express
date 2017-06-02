@@ -1,6 +1,21 @@
 var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/data');
+var totalq1 = 0;
+var totalq2 = 0;
+var totalq3 = 0;
+var q1a1 = 0;
+var q1a2 = 0;
+var q1a3 = 0;
+var q1a4 = 0;
+var q2a1 = 0;
+var q2a2 = 0;
+var q2a3 = 0;
+var q2a4 = 0;
+var q3a1 = 0;
+var q3a2 = 0;
+var q3a3 = 0;
+var q3a4 = 0;
 
 var mdb = mongoose.connection;
 mdb.on('error', console.error.bind(console, 'connection error:'));
@@ -16,7 +31,22 @@ exports.index = function (req, res) {
         if (err) return console.error(err);
         res.render('index', {
             title: 'User List',
-            people: user
+            people: user,
+            q1a1: q1a1,
+            q1a2: q1a2,
+            q1a3: q1a3,
+            q1a4: q1a4,
+            q2a1: q2a1,
+            q2a2: q2a2,
+            q2a3: q2a3,
+            q2a4: q2a4,
+            q3a1: q3a1,
+            q3a2: q3a2,
+            q3a3: q3a3,
+            q3a4: q3a4,
+            totalq1: totalq1,
+            totalq2: totalq2,
+            totalq3: totalq3
         });
     });
 };
@@ -63,6 +93,45 @@ exports.createUser = function (req, res) {
         question2: req.body.question2,
         question3: req.body.question3
     });
+    if(user.question1 == "Mufasa"){
+    q1a1++;
+    totalq1++;
+  }else if(user.question1 == "Simba"){
+    q1a2++;
+    totalq1++;
+  }else if(user.question1 == "Scar"){
+    totalq1++;
+    q1a3++;
+  }else if(user.question1 == "Nala"){
+    totalq1++;
+    q1a4++;
+  }
+  if(user.question2 == "Leonardo Da Vinci"){
+    q2a1++;
+    totalq2++;
+  }else if(user.question2 == "Van Gogh"){
+    q2a2++;
+    totalq2++;
+  }else if(user.question2 == "Frida Kahlo"){
+    q2a3++;
+    totalq2++;
+  }else if(user.question2 == "Claude Monet"){
+    q2a4++;
+    totalq2++;
+  }
+  if(user.question3 == "Luigi"){
+    q3a1++;
+    totalq3++;
+  }else if(user.question3 == "Wario"){
+    q3a2++;
+    totalq3++;
+  }else if(user.question3 == "Jumpman"){
+    q3a3++;
+    totalq3++;
+  }else if(user.question3 == "Hiro"){
+    q3a4++;
+    totalq3++;
+  }
     user.save(function (err, user) {
         if (err) return console.error(err);
         console.log(req.body.username + ' added');
@@ -100,6 +169,45 @@ exports.editPerson = function (req, res) {
 
 exports.delete = function (req, res) {
     User.findByIdAndRemove(req.params.id, function (err, user) {
+        if(user.question1 == "Mufasa"){
+            q1a1--;
+            totalq1--;
+        }else if(user.question1 == "Simba"){
+            q1a2--;
+            totalq1--;
+        }else if(user.question1 == "Scar"){
+            totalq1--;
+            q1a3--;
+        }else if(user.question1 == "Nala"){
+            totalq1--;
+            q1a4--;
+        }
+        if(user.question2 == "Leonardo Da Vinci"){
+            q2a1--;
+            totalq2--;
+        }else if(user.question2 == "Van Gogh"){
+            q2a2--;
+            totalq2--;
+        }else if(user.question2 == "Frida Kahlo"){
+            q2a3--;
+            totalq2--;
+        }else if(user.question2 == "Claude Monet"){
+            q2a4--;
+            totalq2--;
+        }
+        if(user.question3 == "Luigi"){
+            q3a1--;
+            totalq3--;
+        }else if(user.question3 == "Wario"){
+            q3a2--;
+            totalq3--;
+        }else if(user.question3 == "Jumpman"){
+            q3a3--;
+            totalq3--;
+        }else if(user.question3 == "Hiro"){
+            q3a4--;
+            totalq3--;
+        }
         if (err) return console.error(err);
         res.redirect('/index');
     });

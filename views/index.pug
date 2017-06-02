@@ -2,7 +2,7 @@ extends layout
 
 
 block content
-    a(href='/logout') Logout
+  a(href='/logout') Logout
     table(class = 'gridtable')
         tr
           th Id
@@ -34,3 +34,5 @@ block content
         p
         #menu
             a(href='/create') Add New User
+  br
+  canvas(id = 'my_canvas', width='600', height='390')
