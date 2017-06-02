@@ -19,7 +19,8 @@ var express = require('express'),
     route = require('./routes/routes.js'),
     bodyParser = require('body-parser'),
     expressSession = require('express-session'),
-    cookieParser = require('cookie-parser');
+    cookieParser = require('cookie-parser'),
+    User = require('./models/user-model');
 
 var app = express();
 
@@ -53,9 +54,24 @@ app.get('/index', route.index);
 app.get('/create', route.create);
 
 app.get('/details/:id', route.details);
-app.post('/create', urlencodedParser, route.createUser);
+app.post('/create', urlencodedParser, userExist, route.createUser);
 app.post('/signup', urlencodedParser, route.create);
 //app.post('/edit/:id', urlencodedParser, route.editUser);
 app.get('/delete/:id', route.delete);
 app.get('/logout', route.logout);
 app.listen(3000);
+
+function userExist(req, res, next) {
+    User.count({
+        username: req.body.username
+    }, function (err, count) {
+        if (count === 0) {
+            next();
+        } else {
+            req.session.error = "User Exist"
+            res.render("login", {
+                error: 'Username in use'
+            });
+        }
+    });
+}

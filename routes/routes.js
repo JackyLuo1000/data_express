@@ -9,6 +9,7 @@ mdb.once('open', function (callback) {
 });
 
 var User = require('../models/user-model');
+var error = '';
 
 exports.index = function (req, res) {
     User.find(function (err, user) {
@@ -38,7 +39,9 @@ exports.login = function (req, res) {
             });
         } else {
             req.session.error = 'Authentication failed, please check your ' + ' username and password.';
-            res.redirect('/');
+            res.render('login', {
+                error: error
+            });
         }
     });
 }
@@ -144,10 +147,12 @@ function authenticate(name, pass, fn) {
                 if(isMatch){
                     return fn(null, user)
                 }else{
-                    fn(new Error('invalid password'));
+                    error = 'Invalid Password';
+                    return fn(new Error('Invalid Password'));
                 }
             })
         } else {
+            error = 'No username'
             return fn(new Error('cannot find user'));
         }
     });

@@ -1,13 +1,15 @@
 extends layout
 
 block content
-  p Username: #{user.username}
-  p Email: #{user.email}
-  p Age: #{user.age}
-  p Level: #{user.level}
-  p Question1: #{user.question1}
-  p Question2: #{user.question2}
-  p Question3: #{user.question3}
-  br
-  #menu
+
+    a(href='/logout') Logout
+    p Username: #{user.username}
+    p Email: #{user.email}
+    p Age: #{user.age}
+    p Level: #{user.level}
+    p Question1: #{user.question1}
+    p Question2: #{user.question2}
+    p Question3: #{user.question3}
+    br
+    #menu
     a(href='/index') Go back
