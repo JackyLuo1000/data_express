@@ -1,0 +1,20 @@
+doctype
+html
+    head
+        title=title
+        link(href='styles/style.css', rel='stylesheet')
+    body
+        form(method='post', action='/')
+            label(for='username') Username (user):
+            br
+            input(name='username')
+            p
+            label(for='password') Password (pass):
+            br
+            input(name='password', type='password')
+            p
+            input(type='submit', value='Enter')
+            p
+            p(id='error')
+        form(method='post', action='/signup')
+            input(type='submit', value='Sign Up')

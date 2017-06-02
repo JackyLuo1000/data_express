@@ -14,33 +14,48 @@
 // ser)e-parser)
 
 var express = require('express'),
-  pug = require('pug'),
-  path = require('path'),
-  route = require('./routes/routes.js'),
-  bodyParser = require('body-parser');
-
-
+    pug = require('pug'),
+    path = require('path'),
+    route = require('./routes/routes.js'),
+    bodyParser = require('body-parser'),
+    expressSession = require('express-session'),
+    cookieParser = require('cookie-parser');
 
 var app = express();
 
+var checkAuth = function (req, res, next) {
+    if (req.session.user && req.session.user.isAuthenticated) {
+        next();
+    } else {
+        res.redirect('/');
+    }
+};
 
 app.set('view engine', 'pug');
 app.set('views', __dirname + '/views');
-
 app.use(express.static(path.join(__dirname + '/public')));
 
-var urlencodedParser = bodyParser.urlencoded({
-  extended: true
+app.use(cookieParser());
+app.use(expressSession({secret: '5ecretP455c0de', saveUninitialized: true, resave: true}));
+
+app.get('/', function (req, res) {
+    res.render('login');
 });
 
+var urlencodedParser = bodyParser.urlencoded({ extended: false })
+
+// checks to see if user and password are correct
+app.post('/', urlencodedParser, route.login);
 
 
-app.get('/', route.index);
+app.get('/index', route.index);
 
 app.get('/create', route.create);
 
 app.get('/details/:id', route.details);
 app.post('/create', urlencodedParser, route.createUser);
+app.post('/signup', urlencodedParser, route.create);
 //app.post('/edit/:id', urlencodedParser, route.editUser);
 app.get('/delete/:id', route.delete);
+app.get('/logout', route.logout);
 app.listen(3000);

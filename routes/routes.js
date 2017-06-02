@@ -20,6 +20,29 @@ exports.index = function (req, res) {
     });
 };
 
+exports.login = function (req, res) {
+    console.log(req.body.username);
+    authenticate(req.body.username, req.body.password, function (err, user) {
+        if (user) {
+
+            req.session.regenerate(function () {
+
+                req.session.user = { isAuthenticated: true, username: req.body.username};
+                if(user.level === 'User'){
+                    console.log('User')
+                }
+                if(user.level === 'Admin'){
+                    console.log('Admin')
+                }
+                res.redirect('/index');
+            });
+        } else {
+            req.session.error = 'Authentication failed, please check your ' + ' username and password.';
+            res.redirect('/');
+        }
+    });
+}
+
 exports.create = function (req, res) {
     res.render('create', {
         title: 'Add User'
@@ -69,13 +92,13 @@ exports.editPerson = function (req, res) {
             console.log(req.body.name + ' updated');
         });
     });
-    res.redirect('/');
+    res.redirect('/index');
 };
 
 exports.delete = function (req, res) {
     User.findByIdAndRemove(req.params.id, function (err, user) {
         if (err) return console.error(err);
-        res.redirect('/');
+        res.redirect('/index');
     });
 };
 
@@ -95,3 +118,38 @@ exports.details = function (req, res) {
         });
     });
 };
+
+exports.logout = function (req, res) {
+    req.session.destroy(function(err){
+        if(err){
+            console.log(err);
+        }
+        else
+        {
+            res.redirect('/');
+        }
+    });
+}
+
+function authenticate(name, pass, fn) {
+    if (!module.parent) console.log('authenticating %s:%s', name, pass);
+    User.findOne({
+        username: name
+    },
+                 function (err, user) {
+        if (user) {
+            console.log('Here')
+            if (err) return fn(new Error('cannot find user'));
+            user.comparePassword(pass, function(err, isMatch){
+                if(isMatch){
+                    return fn(null, user)
+                }else{
+                    fn(new Error('invalid password'));
+                }
+            })
+        } else {
+            return fn(new Error('cannot find user'));
+        }
+    });
+
+}
