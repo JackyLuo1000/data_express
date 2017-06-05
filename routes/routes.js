@@ -166,6 +166,52 @@ exports.edit = function (req, res) {
 exports.editPerson = function (req, res) {
   User.findById(req.params.id, function (err, user) {
     if (err) return console.error(err);
+    
+    if(user.question1 == "Mufasa"){
+          q1a1--;
+          totalq1--;
+     }else if(user.question1 == "Simba"){
+          q1a2--;
+          totalq1--;
+     }else if(user.question1 == "Scar"){
+         totalq1--;
+         q1a3--;
+     }else if(user.question1 == "Nala"){
+         totalq1--;
+         q1a4--;
+     }
+     if(user.question2 == "Leonardo Da Vinci"){
+         q2a1--;
+         totalq2--;
+     }else if(user.question2 == "Van Gogh"){
+         q2a2--;
+         totalq2--;
+     }else if(user.question2 == "Frida Kahlo"){
+         q2a3--;
+         totalq2--;
+     }else if(user.question2 == "Claude Monet"){
+         q2a4--;
+         totalq2--;
+     }
+     if(user.question3 == "Luigi"){
+         q3a1--;
+         totalq3--;
+     }else if(user.question3 == "Wario"){
+         q3a2--;
+         totalq3--;
+     }else if(user.question3 == "Jumpman"){
+         q3a3--;
+         totalq3--;
+     }else if(user.question3 == "Hiro"){
+         q3a4--;
+         totalq3--;
+     }
+     if(totalq1 < 0 || totalq2 < 0 || totalq3 < 0){
+        totalq1 = 0;
+        totalq2 = 0;
+        totalq3 = 0;
+    }
+    
     user.username= req.body.username;
     user.email= req.body.email;
     user.password= req.body.password;
@@ -174,6 +220,47 @@ exports.editPerson = function (req, res) {
     user.question1= req.body.question1;
     user.question2= req.body.question2;
     user.question3= req.body.question3;
+    
+    if(user.question1 == "Mufasa"){
+        q1a1++;
+        totalq1++;
+    }else if(user.question1 == "Simba"){
+        q1a2++;
+        totalq1++;
+    }else if(user.question1 == "Scar"){
+        totalq1++;
+        q1a3++;
+    }else if(user.question1 == "Nala"){
+        totalq1++;
+        q1a4++;
+    }
+    if(user.question2 == "Leonardo Da Vinci"){
+        q2a1++;
+        totalq2++;
+    }else if(user.question2 == "Van Gogh"){
+        q2a2++;
+        totalq2++;
+    }else if(user.question2 == "Frida Kahlo"){
+        q2a3++;
+        totalq2++;
+    }else if(user.question2 == "Claude Monet"){
+        q2a4++;
+        totalq2++;
+    }
+    if(user.question3 == "Luigi"){
+        q3a1++;
+        totalq3++;
+    }else if(user.question3 == "Wario"){
+        q3a2++;
+        totalq3++;
+    }else if(user.question3 == "Jumpman"){
+        q3a3++;
+        totalq3++;
+    }else if(user.question3 == "Hiro"){
+        q3a4++;
+        totalq3++;
+    }
+    
     user.save(function (err, person) {
       if (err) return console.error(err);
       console.log(req.body.name + ' updated');
