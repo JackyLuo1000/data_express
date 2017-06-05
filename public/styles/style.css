@@ -1,18 +1,19 @@
 html {
-  background-color: #227;
+  background-color: #7F2B15;
 }
 body {
-  font-family: verdana, arial, sans-serif;
-  font-size: 12px;
+  font-family: 'Anonymous Pro';
+  font-size: 14px;
   width: 80%;
   padding: 20px;
-  background-color: #eeb;
+  background-color: #E8BFA2;
+    align-content: center;
 }
 
 table.gridtable {
-  color: #337;
+  color: #256BFF;
   border-width: 1px;
-  border-color: #559;
+  border-color: #00B2A5;
   border-collapse: collapse;
 }
 
@@ -20,22 +21,18 @@ table.gridtable th {
   border-width: 1px;
   padding: 8px;
   border-style: solid;
-  border-color: #559;
-  background-color: #ccf;
+  border-color: #00B2A5;
+  background-color: #FFF;
 }
 
 table.gridtable td {
   border-width: 1px;
   padding: 8px;
   border-style: solid;
-  border-color: #559;
+  border-color: #00B2A5;
   background-color: #fff;
 }
-canvas{
-    background: #CCC;
-    vertical-align: bottom;
-    border: 1px solid black;
-}
+
 a{
     text-decoration: none;
 }
