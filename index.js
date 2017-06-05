@@ -49,7 +49,23 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 app.post('/', urlencodedParser, route.login);
 
 
-app.get('/index', route.index);
+app.get('/index', function(req, res, next){
+    app.set('oldDate', req.cookies.lastVisited);
+    var datetime = new Date();
+//    datetime = datetime.toISOString().replace(/T/, ' ').replace(/\..+/, '');
+    var dateString;
+    var yyyy = datetime.getFullYear().toString();
+  var mm = (datetime.getMonth()+1).toString();
+  var dd  = datetime.getDate().toString();
+    dateString = yyyy + '-' + mm + '-' + dd
+    console.log(dateString)
+    if(req.cookies.lastvisited === datetime) {
+        res.cookie('lastVisited', dateString)
+    } else {
+        res.cookie('lastVisited', dateString)
+    }
+    next();
+}, route.index);
 
 app.get('/create', route.create);
 

@@ -27,6 +27,18 @@ var User = require('../models/user-model');
 var error = '';
 
 exports.index = function (req, res) {
+//    var datetime = new Date();
+//    var olddate = new Date();
+//    console.log(datetime);
+//    if(req.cookies.lastvisited === datetime) {
+//        res.cookie('lastVisited', datetime)
+//    } else {
+//        olddate = req.cookies.lastvisited
+//        res.cookie('lastVisited', datetime)
+//    }
+    var oldDate = new Date();
+    oldDate = req.app.get('oldDate')
+    console.log("Routes: " + oldDate)
     User.find(function (err, user) {
         if (err) return console.error(err);
         res.render('index', {
@@ -46,7 +58,8 @@ exports.index = function (req, res) {
             q3a4: q3a4,
             totalq1: totalq1,
             totalq2: totalq2,
-            totalq3: totalq3
+            totalq3: totalq3,
+            date: 'Last Visted on ' + req.app.get('oldDate') + '.'
         });
     });
 };
@@ -253,6 +266,7 @@ function authenticate(name, pass, fn) {
             if (err) return fn(new Error('cannot find user'));
             user.comparePassword(pass, function(err, isMatch){
                 if(isMatch){
+                    error = "";
                     return fn(null, user)
                 }else{
                     error = 'Invalid Password';
@@ -265,4 +279,21 @@ function authenticate(name, pass, fn) {
         }
     });
 
+}
+
+function dateFormat (date, fstr, utc) {
+  utc = utc ? 'getUTC' : 'get';
+  return fstr.replace (/%[YmdHMS]/g, function (m) {
+    switch (m) {
+    case '%Y': return date[utc + 'FullYear'] (); // no leading zeros required
+    case '%m': m = 1 + date[utc + 'Month'] (); break;
+    case '%d': m = date[utc + 'Date'] (); break;
+    case '%H': m = date[utc + 'Hours'] (); break;
+    case '%M': m = date[utc + 'Minutes'] (); break;
+    case '%S': m = date[utc + 'Seconds'] (); break;
+    default: return m.slice (1); // unknown code, remove %
+    }
+    // add leading zero if required
+    return ('0' + m).slice (-2);
+  });
 }
