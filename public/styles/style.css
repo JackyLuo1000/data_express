@@ -31,7 +31,11 @@ table.gridtable td {
   border-color: #559;
   background-color: #fff;
 }
-
+canvas{
+    background: #CCC;
+    vertical-align: bottom;
+    border: 1px solid black;
+}
 a{
     text-decoration: none;
 }
