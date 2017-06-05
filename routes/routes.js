@@ -106,6 +106,11 @@ exports.createUser = function (req, res) {
         question2: req.body.question2,
         question3: req.body.question3
     });
+    if(totalq1 < 0 || totalq2 < 0 || totalq3 < 0){
+    totalq1 = 0;
+    totalq2 = 0;
+    totalq3 = 0;
+  }
     if(user.question1 == "Mufasa"){
     q1a1++;
     totalq1++;
