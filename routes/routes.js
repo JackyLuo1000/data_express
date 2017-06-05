@@ -187,6 +187,11 @@ exports.editPerson = function (req, res) {
 
 exports.delete = function (req, res) {
     User.findByIdAndRemove(req.params.id, function (err, user) {
+        if(totalq1 < 0 || totalq2 < 0 || totalq3 < 0){
+            totalq1 = 0;
+            totalq2 = 0;
+            totalq3 = 0;
+        }
         if(user.question1 == "Mufasa"){
             q1a1--;
             totalq1--;
