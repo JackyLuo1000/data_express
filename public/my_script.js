@@ -76,3 +76,4 @@ drawAnswers(startX + (barWidth*12), cHeight - barWidth, barWidth, ((-Q3A3 * scal
 ctx.fillText("A3", startX + barWidth*12, cHeight - barWidth/2);
 drawAnswers(startX + (barWidth*13), cHeight - barWidth, barWidth, ((-Q3A4 * scaler) / q3total)*10, '#00B2A5');
 ctx.fillText("A4", startX + barWidth*13, cHeight - barWidth/2);
+
