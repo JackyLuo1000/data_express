@@ -27,15 +27,6 @@ var User = require('../models/user-model');
 var error = '';
 
 exports.index = function (req, res) {
-//    var datetime = new Date();
-//    var olddate = new Date();
-//    console.log(datetime);
-//    if(req.cookies.lastvisited === datetime) {
-//        res.cookie('lastVisited', datetime)
-//    } else {
-//        olddate = req.cookies.lastvisited
-//        res.cookie('lastVisited', datetime)
-//    }
     var oldDate = new Date();
     oldDate = req.app.get('oldDate')
     console.log("Routes: " + oldDate)
@@ -64,6 +55,35 @@ exports.index = function (req, res) {
     });
 };
 
+exports.index2 = function (req, res) {
+  var oldDate = new Date();
+    oldDate = req.app.get('oldDate')
+    console.log("Routes: " + oldDate)
+  User.find(function (err, user) {
+    if (err) return console.error(err);
+    res.render('index2', {
+      title: 'User List',
+      people: user,
+      q1a1: q1a1,
+      q1a2: q1a2,
+      q1a3: q1a3,
+      q1a4: q1a4,
+      q2a1: q2a1,
+      q2a2: q2a2,
+      q2a3: q2a3,
+      q2a4: q2a4,
+      q3a1: q3a1,
+      q3a2: q3a2,
+      q3a3: q3a3,
+      q3a4: q3a4,
+      totalq1: totalq1,
+      totalq2: totalq2,
+      totalq3: totalq3,
+      date: 'Last Visted on ' + req.app.get('oldDate') + '.'
+    });
+  });
+};
+
 exports.login = function (req, res) {
     console.log(req.body.username);
     authenticate(req.body.username, req.body.password, function (err, user) {
@@ -78,7 +98,13 @@ exports.login = function (req, res) {
                 if(user.level === 'Admin'){
                     console.log('Admin')
                 }
-                res.redirect('/index');
+                if(user.level == "User"){
+                  res.redirect('/index2');
+                }else if(user.level == "Admin"){
+                  res.redirect('/index');
+                }else{
+                  console.log("failed");
+                }
             });
         } else {
             req.session.error = 'Authentication failed, please check your ' + ' username and password.';
@@ -149,7 +175,13 @@ exports.createUser = function (req, res) {
         if (err) return console.error(err);
         console.log(req.body.username + ' added');
     });
-    res.redirect('/index');
+    if(user.level == "User"){
+        res.redirect('/index2');
+    }else if(user.level == "Admin"){
+        res.redirect('/index');
+    }else{
+        console.log("failed");
+    }
 };
 
 exports.edit = function (req, res) {
@@ -264,7 +296,7 @@ exports.editUser = function (req, res) {
             console.log(req.body.name + ' updated');
         });
     });
-    res.redirect('/index');
+    res.redirect('/index2');
 };
 
 exports.delete = function (req, res) {
@@ -314,7 +346,6 @@ exports.delete = function (req, res) {
             totalq3 = 0;
         }
         if (err) return console.error(err);
-        res.redirect('/index');
     });
 };
 
