@@ -266,7 +266,7 @@ exports.editPerson = function (req, res) {
       console.log(req.body.name + ' updated');
     });
   });
-  res.redirect('/');
+  res.redirect('/index');
 };
 
 exports.delete = function (req, res) {
