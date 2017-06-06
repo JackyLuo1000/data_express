@@ -43,6 +43,23 @@ app.get('/', function (req, res) {
     res.render('login');
 });
 
+app.get('/index2', function(req, res, next){
+    app.set('oldDate', req.cookies.lastVisited);
+    var datetime = new Date();
+    var dateString;
+    var yyyy = datetime.getFullYear().toString();
+  var mm = (datetime.getMonth()+1).toString();
+  var dd  = datetime.getDate().toString();
+    dateString = yyyy + '-' + mm + '-' + dd
+    console.log(dateString)
+    if(req.cookies.lastvisited === datetime) {
+        res.cookie('lastVisited', dateString)
+    } else {
+        res.cookie('lastVisited', dateString)
+    }
+    next();
+}, route.index2);
+
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 // checks to see if user and password are correct
